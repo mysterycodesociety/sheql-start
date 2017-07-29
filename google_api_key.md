@@ -206,6 +206,8 @@ end
 ## Use the code to fetch the access token
 
 Now the code is nice, but we really want is access.  Google has built a handy little method to fetch it.
+
+```
 ...
 # /routes/authentication.rb
 
