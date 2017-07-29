@@ -20,7 +20,7 @@ set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 def logger; settings.logger end
 
 def no_authentication?
-  true
+  false
 end
 
 configure do
