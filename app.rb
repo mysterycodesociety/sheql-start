@@ -32,32 +32,9 @@ configure do
   logger.level = Logger::DEBUG
 
 
-  # set up authorization
-  unless no_authentication?
-    Google::Apis::ClientOptions.default.application_name = 'SheQL'
-    Google::Apis::ClientOptions.default.application_version = '1.0.0'
-
-    client_secrets = Google::APIClient::ClientSecrets.load
-    authorization = client_secrets.to_authorization
-    authorization.scope = 'openid email profile'
-
-    set :authorization, authorization
-  end
-
   set :no_auth_neededs, ['/login', '/authenticate', '/authenticated']
 
   set :logger, logger
-end
-
-def user_credentials
-  # Build a per-request oauth credential based on token stored in session
-  # which allows us to use a shared API client.
-  @authorization ||= (
-    auth = settings.authorization.dup
-    auth.redirect_uri = to('/authenticated')
-    auth.update_token!(session)
-    auth
-  )
 end
 
 def logged_in?
