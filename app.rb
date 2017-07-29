@@ -5,6 +5,7 @@ require 'pry'
 require 'logger'
 require 'google/api_client/client_secrets'
 require 'google/apis/oauth2_v2'
+require 'securerandom'
 
 # require models
 Dir["./models/*.rb"].each {|file| require file }
@@ -14,27 +15,37 @@ Dir["./routes/*.rb"].each {|file| require file }
 require "./routes.rb"
 
 enable :sessions
+set :session_secret, ENV.fetch('SESSION_SECRET') { SecureRandom.hex(64) }
 
 def logger; settings.logger end
 
+def no_authentication?
+  true
+end
+
 configure do
+  #  log to file in log folder
   log_file = File.new("#{settings.root}/log/#{settings.environment}.log", 'a+')
   log_file.sync = true
   use Rack::CommonLogger, log_file
-
   logger = Logger.new(log_file)
   logger.level = Logger::DEBUG
 
-  Google::Apis::ClientOptions.default.application_name = 'SheQL'
-  Google::Apis::ClientOptions.default.application_version = '1.0.0'
 
-  client_secrets = Google::APIClient::ClientSecrets.load
-  authorization = client_secrets.to_authorization
-  authorization.scope = 'openid email profile'
+  # set up authorization
+  unless no_authentication?
+    Google::Apis::ClientOptions.default.application_name = 'SheQL'
+    Google::Apis::ClientOptions.default.application_version = '1.0.0'
+
+    client_secrets = Google::APIClient::ClientSecrets.load
+    authorization = client_secrets.to_authorization
+    authorization.scope = 'openid email profile'
+
+    set :authorization, authorization
+  end
 
   set :no_auth_neededs, ['/login', '/authenticate', '/authenticated']
 
-  set :authorization, authorization
   set :logger, logger
 end
 
@@ -55,11 +66,13 @@ end
 
 
 before do
-  unless logged_in? || settings.no_auth_neededs.include?(request.path_info)
+  unless logged_in? || settings.no_auth_neededs.include?(request.path_info) || no_authentication?
     redirect to('/login')
   end
 end
 
 after do
-  set_user_session
+  unless no_authentication?
+    set_user_session
+  end
 end

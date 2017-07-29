@@ -20,11 +20,14 @@ get '/authenticated' do
   user_credentials.code = params[:code] if params[:code]
   user_credentials.fetch_access_token!
 
+  # set user tokens into session
   set_user_session
 
+  # use user tokens to request their profile information
   info_service = Google::Apis::Oauth2V2::Oauth2Service.new
   info = info_service.get_userinfo(options: { authorization: user_credentials.access_token })
 
+  # save profile information to session
   session[:email] = info.email
   session[:family_name] = info.family_name
   session[:given_name] = info.given_name
@@ -32,10 +35,15 @@ get '/authenticated' do
   session[:name] = info.name
   session[:picture] = info.picture
 
+
+  # Once your User model is set up, uncomment this
+  # You could also choose to create/save some of the information to the database instead
+  #
   # User.find_or_create_by(email: session[:email]) do |user|
   #   user.name = session[:name]
   #   user.picture = session[:picture]
   # end
+
   redirect to('/')
 end
 
