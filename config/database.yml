@@ -1,7 +1,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: sinatra_dev
+  database: sheql_dev
   pool: 2
   username:
   password: 
@@ -9,7 +9,7 @@ development:
 production:
   adapter: postgresql
   encoding: unicode
-  database: sinatra_production
+  database: sheql_prod
   pool: 2
   username:
   password:

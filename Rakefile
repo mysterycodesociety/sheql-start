@@ -31,11 +31,24 @@ namespace :db do
   end
 end
   
+desc "Start the server."
+task :serve, [:port, :ip] do |t, args|
+  host = ENV['C9_HOSTNAME'] || "localhost"
+  port = args.port || ENV['PORT'] || "4567"
+  ip = args.ip || ENV['IP'] || nil
 
+  puts "Start server: http(s)://#{host}:#{port}/"
+  if ip
+    sh "ruby ./app.rb -p #{port} -o #{ip}"
+  else
+    sh "ruby ./app.rb -p #{port}"
+  end
+end
 
 task :default do 
   options = { 
               "rake -T": "Will list all other rake tasks.",
+              "rake serve": "Will run sinatra server.",
               "rake db:setupC9": "Will set up cloud 9",
               "rake db:create": "Will create a database",
               "rake db:migrate": "Will run migrations", 
