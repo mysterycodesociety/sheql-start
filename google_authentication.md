@@ -328,11 +328,9 @@ get '/authenticated' do
   info = info_service.get_userinfo(options: { authorization: user_credentials.access_token })
 
   # save profile information to database
-  user = User.find_or_create_by(email: session[:email]) do |user|
-     user.name = "#{info.given_name} #{info.family_name}"
-     user.email = info.email
-     user.picture = info.picture
-  end
+  user = User.find_or_initialize_by(email: info.email)
+  user.picture = info.picture
+  user.name = "#{info.given_name} #{info.family_name}"
   user.save
   session[:current_user_id] = user.id
 end
