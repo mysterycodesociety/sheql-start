@@ -386,7 +386,7 @@ If you used session user id, try this.
 
 
 get '/' do
-  @user = User.find(session[:current_user_id].to_i)
+  @user = User.find(session[:current_user_id])
   "Hi, #{@user.name}.  <img style='width:60px; border-radius:50%;' src='#{@user.picture}' >"
 end
 
