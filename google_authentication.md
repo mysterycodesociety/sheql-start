@@ -121,7 +121,7 @@ end
 
 ```
 
-It's okay if this code doesn't quite all make sense to you.  But let's understand it in big terms.  The code sets the name and version of our application.  It loads the secrets file.  And it says (in terms of scope), that we want our user's email, profile, and openid (authentication).  Then we are saving it into our settings on the Sinatra server in the line `set :authorization, authoriztion` line.  With Sinatra's settings, we can save things to settings with that kind of call.
+It's okay if this code doesn't quite all make sense to you.  But let's understand it in big terms.  The code sets the name and version of our application.  It loads the secrets file.  And it says (in terms of scope), that we want our user's email, profile, and openid (authentication).  Then we are saving it into our settings on the Sinatra server in the line `set :authorization, authorization` line.  With Sinatra's settings, we can save things to settings with that kind of call.
 
 
 Now we need to set up user_credentials based on the session.  Outside of the `configure do` block, let's define this method.
