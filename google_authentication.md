@@ -64,7 +64,7 @@ There is a `.gitignore` file inside the root of the repo.  If you open it, you'l
 
 ## Turn on Authentication
 
-In your `app.rb` file, we will want to enable authentication.  The `no_authentication?` method is set to false.  Change it to true.
+In your `app.rb` file, we will want to enable authentication.  The `no_authentication?` method is set to true.  Change it to false.
 
 ```
 # app.rb
@@ -72,7 +72,7 @@ In your `app.rb` file, we will want to enable authentication.  The `no_authentic
 ...
 
 def no_authentication?
-  true
+  false
 end
 
 ```
@@ -174,7 +174,7 @@ Run your app and confirm that you can click the link over to the '/authenticate'
 ## Direct users to Google's for login
 Now let's set up our authentication route.  We are going to redirect our users to Google to sign in.  `redirect` is a Sinatra command.  The rest is part of the `google-api-client` code that will direct to the authorization website.
 
-...
+```
 # /routes/authentication.rb
 
 ...
@@ -191,7 +191,7 @@ When we registered our site with Google, we set it up so that the request from G
 
 First we should have a code, and it should be in our Sinatra `params`.  Let's assign it to our user_credentials object.
 
-...
+```
 # /routes/authentication.rb
 
 ...
