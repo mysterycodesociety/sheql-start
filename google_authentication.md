@@ -156,7 +156,7 @@ The `user_credentials` method duplicates the authorization object we set up in o
 
 We will use the '/authenticate' route to authenticate users and send them to Google.  And Google will send them back to the '/authenticated' route.
 
-But first, we want a login page that is not authenticated where users can land and can choose whether to be log in using Google.  We will probably want a layout file someday, but for now, let's make this work.  Just use a string and embed a link tag that hooks up to the '/authenticate' route.
+But first, we want a login page that is not authenticated where users can land and can choose whether to log in using Google.  We will probably want a layout file someday, but for now, let's make this work.  Just use a string and embed a link tag that hooks up to the '/authenticate' route.
 
 ```
 # /routes/authentication.rb
@@ -329,9 +329,11 @@ get '/authenticated' do
 
   # save profile information to database
   user = User.find_or_create_by(email: session[:email]) do |user|
-     user.name = session[:name]
-     user.picture = session[:picture]
+     user.name = "#{info.given_name} #{info.family_name}"
+     user.email = info.email
+     user.picture = info.picture
   end
+  user.save
   session[:current_user_id] = user.id
 end
 ```
@@ -365,14 +367,11 @@ get '/authenticated' do
   session[:name] = info.name
   session[:picture] = info.picture
 
-
-  # Once your User model is set up, uncomment this
-
   redirect to('/')
 end
 ```
 
-If you want to see if you have properly, you could verify it worked by using your session params.
+Now let's confirm that you fetched and saved the information from Google correctly.
 
 If you used session name, try this.
 
