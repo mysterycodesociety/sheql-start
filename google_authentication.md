@@ -30,7 +30,7 @@ Next, Google prompts you to create your project.  Name it something that you wil
 <img src="./assets/create_api_credentials.png" style="width:400px;" />
 
 
-You will be directed to the client id page.  Choose the `Web Application` option.  In the `Authorized Redirect URIs` section, you will want the complete url of where users will be returned after they authenticate. This is the domain you copied from Cloud 9 + the route for where authenticated users should go when they first get logged in.  e.g. Cloud 9 + '/authenticatedd  = `https://test-gmfholley.c9users.io/authenticated/authenticated`
+You will be directed to the client id page.  Choose the `Web Application` option.  In the `Authorized Redirect URIs` section, you will want the complete url of where users will be returned after they authenticate. This is the domain you copied from Cloud 9 + the route for where authenticated users should go when they first get logged in.  e.g. Cloud 9 + '/authenticated  = `https://test-gmfholley.c9users.io/authenticated/authenticated`
 
 <img src="./assets/create_client_id.png" style="width:400px;" />
 
