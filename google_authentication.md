@@ -39,7 +39,7 @@ Once you set up the client ID, you will get a pop up with your client ID and you
 <img src="./assets/client_secret.png" style="width:400px;" />
 
 Then click on your credentials again and click on the Download JSON button.  Download that file and save it somewhere.
-<img src="./assets/download_secret.png" style="width:400px;" />
+<img src="./assets/download_secrets.png" style="width:400px;" />
 
 You will also want to provide some information to the user when you ask them to sign in on Google.  Go to the OAuth consent tab.  If you have a logo, you can supply it.  But for right now, the bare minimum of what you need is a name for your project.  Fill that in and click Save.
 <img src="./assets/google_set_up_form.png" style="width:400px;" />
