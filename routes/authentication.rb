@@ -35,15 +35,15 @@ get '/authenticated' do
   session[:name] = info.name
   session[:picture] = info.picture
 
-
-  # Once your User model is set up, uncomment this
   # You could also choose to create/save some of the information to the database instead
+  # Only use once your user model is set up
   #
-  # User.find_or_create_by(email: session[:email]) do |user|
-  #   user.name = session[:name]
-  #   user.picture = session[:picture]
-  # end
-
+  #  user = User.find_or_initialize_by(email: info.email)
+  #  user.picture = info.picture
+  #  user.name = "#{info.given_name} #{info.family_name}"
+  #  user.save
+  #  session[:current_user_id] = user.id
+  
   redirect to('/')
 end
 
