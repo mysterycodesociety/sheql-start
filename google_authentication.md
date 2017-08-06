@@ -295,7 +295,7 @@ get '/authenticated' do
   info_service = Google::Apis::Oauth2V2::Oauth2Service.new
   info = info_service.get_userinfo(options: { authorization: user_credentials.access_token })
 
-    # save profile information to session
+  # save profile information to session
   session[:email] = info.email
   session[:family_name] = info.family_name
   session[:given_name] = info.given_name
@@ -359,13 +359,8 @@ get '/authenticated' do
   info_service = Google::Apis::Oauth2V2::Oauth2Service.new
   info = info_service.get_userinfo(options: { authorization: user_credentials.access_token })
 
-  # save profile information to session
-  session[:email] = info.email
-  session[:family_name] = info.family_name
-  session[:given_name] = info.given_name
-  session[:gender] = info.gender
-  session[:name] = info.name
-  session[:picture] = info.picture
+  # save profile information to session or database
+  ... # whichever code you chose to use
 
   redirect to('/')
 end
