@@ -9,7 +9,7 @@ There are a few steps to the OpenID protocol.
 1. Google redirects the user back to our server, with a one-time code.  Because Google sent the user back, we know `the user is authenticated.`  But we may not know which user.
 1. The code we get back is good only once.  We can use it to request a longer-lived access token that is specific to that user.  We need to be careful with access tokens, as anyone who has them can use them.  We also receive a refresh token that we can use to get a new access token when the access token expires.
 1. Once we have the access token, we can request any additional information.  We will need to access the user's email (so we know who they are), and we might also want their name or maybe their profile picture.
-1. So many trips!  Now that we the information we want, we can store it in a session, which you can think of as temporary storage on the server that is specific to a particular user.  It is not in our ActiveRecord database.  Sinatra generates a random key and sends it back to the user in a cookie.  Every time the user sends a request to your server, the cookies is sent back with the request.  And if the server can match the cookie's key with any saved keys, the server knows which user it is (and that they authenticated already), and the server can access the information we saved into session storage.
+1. So many trips!  Now that we the information we want, we can store it in a session, which you can think of as temporary storage on the server that is specific to a particular user.  It is not in our ActiveRecord database.  Sinatra generates a random key and sends it back to the user in a cookie.  Every time the user sends a request to your server, the cookie is sent back with the request.  And if the server can match the cookie's key with any saved keys, the server knows which user it is (and that they authenticated already), and the server can access the information we saved into session storage.
 
 ## Cloud 9 URL
 On Cloud 9, run your sinatra server using `rake serve` and copy the domain of the server as run on Cloud 9.  Keep it handy.  We will need it.
@@ -30,7 +30,7 @@ Next, Google prompts you to create your project.  Name it something that you wil
 <img src="./assets/create_api_credentials.png" style="width:400px;" />
 
 
-You will be directed to the client id page.  Choose the `Web Application` option.  In the `Authorized Redirect URIs` section, you will want the complete url of where users will be returned after they authenticate. This is the domain you copied from Cloud 9 + the route for where authenticated users should go when they first get logged in.  e.g. Cloud 9 + '/authenticatedd  = `https://test-gmfholley.c9users.io/authenticated/authenticated`
+You will be directed to the client id page.  Choose the `Web Application` option.  In the `Authorized Redirect URIs` section, you will want the complete url of where users will be returned after they authenticate. This is the domain you copied from Cloud 9 + the route for where authenticated users should go when they first get logged in.  e.g. Cloud 9 + '/authenticated  = `https://test-gmfholley.c9users.io/authenticated`
 
 <img src="./assets/create_client_id.png" style="width:400px;" />
 
@@ -39,7 +39,7 @@ Once you set up the client ID, you will get a pop up with your client ID and you
 <img src="./assets/client_secret.png" style="width:400px;" />
 
 Then click on your credentials again and click on the Download JSON button.  Download that file and save it somewhere.
-<img src="./assets/download_secret.png" style="width:400px;" />
+<img src="./assets/download_secrets.png" style="width:400px;" />
 
 You will also want to provide some information to the user when you ask them to sign in on Google.  Go to the OAuth consent tab.  If you have a logo, you can supply it.  But for right now, the bare minimum of what you need is a name for your project.  Fill that in and click Save.
 <img src="./assets/google_set_up_form.png" style="width:400px;" />
@@ -121,7 +121,7 @@ end
 
 ```
 
-It's okay if this code doesn't quite all make sense to you.  But let's understand it in big terms.  The code sets the name and version of our application.  It loads the secrets file.  And it says (in terms of scope), that we want our user's email, profile, and openid (authentication).  Then we are saving it into our settings on the Sinatra server in the line `set :authorization, authoriztion` line.  With Sinatra's settings, we can save things to settings with that kind of call.
+It's okay if this code doesn't quite all make sense to you.  But let's understand it in big terms.  The code sets the name and version of our application.  It loads the secrets file.  And it says (in terms of scope), that we want our user's email, profile, and openid (authentication).  Then we are saving it into our settings on the Sinatra server in the line `set :authorization, authorization` line.  With Sinatra's settings, we can save things to settings with that kind of call.
 
 
 Now we need to set up user_credentials based on the session.  Outside of the `configure do` block, let's define this method.
@@ -156,7 +156,7 @@ The `user_credentials` method duplicates the authorization object we set up in o
 
 We will use the '/authenticate' route to authenticate users and send them to Google.  And Google will send them back to the '/authenticated' route.
 
-But first, we want a login page that is not authenticated where users can land and can choose whether to be log in using Google.  We will probably want a layout file someday, but for now, let's make this work.  Just use a string and embed a link tag that hooks up to the '/authenticate' route.
+But first, we want a login page that is not authenticated where users can land and can choose whether to log in using Google.  We will probably want a layout file someday, but for now, let's make this work.  Just use a string and embed a link tag that hooks up to the '/authenticate' route.
 
 ```
 # /routes/authentication.rb
@@ -295,7 +295,7 @@ get '/authenticated' do
   info_service = Google::Apis::Oauth2V2::Oauth2Service.new
   info = info_service.get_userinfo(options: { authorization: user_credentials.access_token })
 
-    # save profile information to session
+  # save profile information to session
   session[:email] = info.email
   session[:family_name] = info.family_name
   session[:given_name] = info.given_name
@@ -329,9 +329,11 @@ get '/authenticated' do
 
   # save profile information to database
   user = User.find_or_create_by(email: session[:email]) do |user|
-     user.name = session[:name]
-     user.picture = session[:picture]
+     user.name = "#{info.given_name} #{info.family_name}"
+     user.email = info.email
+     user.picture = info.picture
   end
+  user.save
   session[:current_user_id] = user.id
 end
 ```
@@ -357,22 +359,14 @@ get '/authenticated' do
   info_service = Google::Apis::Oauth2V2::Oauth2Service.new
   info = info_service.get_userinfo(options: { authorization: user_credentials.access_token })
 
-  # save profile information to session
-  session[:email] = info.email
-  session[:family_name] = info.family_name
-  session[:given_name] = info.given_name
-  session[:gender] = info.gender
-  session[:name] = info.name
-  session[:picture] = info.picture
-
-
-  # Once your User model is set up, uncomment this
+  # save profile information to session or database
+  ... # whichever code you chose to use
 
   redirect to('/')
 end
 ```
 
-If you want to see if you have properly, you could verify it worked by using your session params.
+Now let's confirm that you fetched and saved the information from Google correctly.
 
 If you used session name, try this.
 
