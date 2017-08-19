@@ -47,7 +47,7 @@ To this:
 These should be the real routes that logged in users or new users to your site can see.
 
 Change this:
-````
+```
 <body>
   <nav class="main-nav sticky-nav">
       <div class="menu">
