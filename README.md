@@ -24,7 +24,6 @@ Enjoy!
 
 1. [Set up Repo](./set_up.md) (If you have done this already for active record, you can skip.)
 1. [Set Up Authentication](./google_authentication.md)
-1. [Fetch Down Changes From Remote](./fetch_remote.md)
 1. [Clean up your layout page](./update_html.md)
 1. [Commit and Push Your Changes to GitHub](https://github.com/Gmfholley/git-knock-knock/blob/master/README.md#simple-push-of-master-branch-to-github)
 1. [Fetch Down Changes From Remote](./fetch_remote.md)
