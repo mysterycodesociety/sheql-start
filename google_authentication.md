@@ -45,7 +45,7 @@ You will also want to provide some information to the user when you ask them to 
 <img src="./assets/google_set_up_form.png" style="width:400px;" />
 
 
-Now we will need two other Google APIs enabled in order for this to work: the Contacts API and the Google+ API.  On the right-hand nav, switch from 'Credentials' to 'Library'.
+Now we will need two other Google APIs enabled in order for this to work: the Google People API and the Google+ API.  On the right-hand nav, switch from 'Credentials' to 'Library'.
 <img src="./assets/google_library_dashboard.png" style="width:400px;" />
 
 Search for 'Google+ API'.  And Click on it.
@@ -54,7 +54,7 @@ Search for 'Google+ API'.  And Click on it.
 On the Google+ API page, click on the 'Enable Button'. It should take a moment and update.
 <img src="./assets/google_plus_enable.png" style="width:400px;" />
 
-Go back to the Library, search for and enable the Contacts API.
+Go back to the Library, search for and enable the Google People API.
 <img src="./assets/google_library_dashboard.png" style="width:400px;" />
 
 ## Save our client_secrets.json file into our repo
