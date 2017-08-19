@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>SheQL Project</title>
+<!-- Candy CSS -->
+<link rel="stylesheet" href="/assets/dist/candy.css" type="text/css" media="all">
+<!-- Optional custom CSS that you write -->
+<link rel="stylesheet" href="/assets/dist/custom.css" type="text/css" media="all">
+</head>
+
+<body>
+  <nav class="main-nav sticky-nav">
+      <div class="menu">
+          <ul>
+              <li><a href="/">Home</a></li>
+          </ul>
+          <button class="open-menu">Menu</button>
+          <button class="close-menu">Close</button>
+      </div>
+  </nav>
+
+  <%= yield %>
+
+</body>
+
+<!-- jQuery -->
+<script src="/assets/lib/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+
+<!-- Candy JS -->
+<script src="/assets/dist/candy.js" type="text/javascript" charset="utf-8"></script>
+</html>
