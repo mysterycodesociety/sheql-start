@@ -82,6 +82,6 @@ In command line/terminal, type: `heroku config:set CLIENT_SECRETS='` and then pa
 ```
 
 1. Your app should be running. You can visit it to make sure.
-1. Run your database migrations on Heroku by using the same command but with `heroku run` in front of it: `heroku run db:migrate`.  (Heroku should create your database automatically if you have it set up correctly.)
-1. Run the seed files, if you have them: `heroku run db:seed`.
+1. Run your database migrations on Heroku by using the same command but with `heroku run` in front of it: `heroku run rake db:migrate`.  (Heroku should create your database automatically if you have it set up correctly.)
+1. Run the seed files, if you have them: `heroku run rake db:seed`.
 
