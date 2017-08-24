@@ -10,7 +10,7 @@ Use the [sinatra-app](https://github.com/Gmfholley/sinatra-app) walk throughs as
 1. In the root of your Cloud 9 workspace, open a terminal window and type `git clone ` and then paste the name of the repo you copied.  It might look like `git clone git@github.com:Gmfholley/sheql-start.git`.
 1. Change your directory into the folder you just made: `cd sheql-start`.
 1. `bundle install` to install all the files for this repo.
-1. `sudo service postgresql start` to start postgres.
+1. `sudo service postgresql start` to start postgres.  You will need to run this every day, first thing.
 
 Now that you've installed and started postgres, you're ready to get started.
 
@@ -24,3 +24,7 @@ Enjoy!
 
 1. [Set up Repo](./set_up.md) (If you have done this already for active record, you can skip.)
 1. [Set Up Authentication](./google_authentication.md)
+1. [Clean up your layout page](./update_html.md)
+1. [Write your blog post](./write_blog_post.md)
+1. [Commit and Push Your Changes to GitHub](https://github.com/Gmfholley/git-knock-knock/blob/master/README.md#simple-push-of-master-branch-to-github)
+1. [Launch to Heroku (with your teacher)](./launch_to_heroku.md)
