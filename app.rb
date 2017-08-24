@@ -32,7 +32,7 @@ configure do
   logger.level = Logger::DEBUG
 
 
-  set :no_auth_neededs, ['/login', '/authenticate', '/authenticated']
+  set :no_auth_neededs, ['/login', '/authenticate', '/authenticated', '/graduation']
 
   set :logger, logger
 end

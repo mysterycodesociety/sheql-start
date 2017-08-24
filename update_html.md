@@ -1,29 +1,5 @@
 The `views/layout.erb` file is used as the default layout on every page.  But it has some things you should change.
 
-1. Update the references of your stylesheets.  The value of the `href` properties on this page should start with a `/`:
-
-Change this:
-```
-<link rel="stylesheet" href="assets/dist/candy.css" type="text/css" media="all">
-```
-
-To this:
-```
-<link rel="stylesheet" href="/assets/dist/candy.css" type="text/css" media="all">
-```
-
-1. Do the same with your `src` properties on the script tags:
-
-Change this:
-```
-<script src="assets/dist/candy.js" type="text/javascript" charset="utf-8"></script>
-```
-
-To this:
-```
-<script src="/assets/dist/candy.js" type="text/javascript" charset="utf-8"></script>
-```
-
 1. Change the Title to the name of your Website
 
 Change this:

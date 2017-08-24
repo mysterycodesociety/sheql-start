@@ -2,64 +2,7 @@
 
 1. Git add and git commit everything on master.  If you have branches that are ready, they should be merged into the master branch.
 1. Push the master branch back to GitHub. The code that is committed and pushed to GitHub is the code that will be launched.
-1. When you fetched from remote, a file called `config.ru` should have been added to the root.  This file tells Heroku what to run when your app launches.  Check that it's there.
-1. If you use Google Auth, the `unless no_authentication?` block in `app.rb` was modified to alternatively load secrets from an environmental variable.  Change it to match the one below.
-1. If you use Google Auth, add the '/graduation' route to the list of unauthorized routes in the `app.rb` file.
 
-Change this:
-
-```
-# app.rb
-
-configure do
- # there are a lot of lines in this configure block
- # ...
-
- # hey!  this line!
-  set :no_auth_neededs, ['/login', '/authenticate', '/authenticated']
-
-  set :logger, logger
-end
-````
-
-To this:
-
-```
-# app.rb
-
-configure do
-
- # there are a lot of lines in this configure block
- # don't change them
-
- # change this line
-  set :no_auth_neededs, ['/login', '/authenticate', '/authenticated', '/graduation']
-
-
-# don't change this one
-  set :logger, logger
-end
-
-```
-
-
-```
-  # set up authorization
-  unless no_authentication?
-    Google::Apis::ClientOptions.default.application_name = 'SheQL'
-    Google::Apis::ClientOptions.default.application_version = '1.0.0'
-
-    ## This is the line that changes
-    client_secrets = Google::APICLientSecrets.load rescue Google::APIClient::ClientSecrets.new(JSON.parse(ENV['CLIENT_SECRETS']))
-
-    ## all other lines stay the same
-    authorization = client_secrets.to_authorization
-    authorization.scope = 'openid email profile'
-
-    set :authorization, authorization
-  end
-
-```
 
 ## Launching your app to Heroku
 1. Your teacher will clone your repo from GitHub.
