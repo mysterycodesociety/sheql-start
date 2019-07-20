@@ -11,21 +11,24 @@ Test to see if you have your rake commands by typing: `rake` into terminal.
   rake db:create_migration: Will create a migration
 ```
 
-Test postgres is working.
+*If you get a warning about unresolved specs run `bundle clean --force` to cleanup any unneeded gems*
+
+Test postgres is working with the password given to you by the instructor.
 
 ```
- $ psql
- ubuntu=#
+ $ psql -U postgres
+ postgres=#
 
 ```
 
 Type `\q` to quit postgres.
 
+Add the username and password given to you by the instructor to the database.yml file.
 
-Set up postgres for Cloud9. (Only needs to happen once.)
+Set up postgres for MCS database. (Only needs to happen once.)
 
 ```
-  $ rake db:setupC9
+  $ rake db:setupMCS
 ```
 
 
